@@ -1,0 +1,88 @@
+{% extends 'myapp/base.html' %}
+{% block title %}{{ equipment.name }} Details{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-12">
+  <!-- Header -->
+  <h1 class="text-5xl font-extrabold text-gray-900 mb-8 tracking-tight">{{ equipment.name }}</h1>
+
+  <!-- Main Card -->
+  <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-3xl shadow-xl border border-gray-100">
+    <div class="grid lg:grid-cols-3 gap-8">
+      <!-- Equipment Image -->
+      <div class="lg:col-span-1">
+        {% if equipment.image %}
+          <img src="{{ equipment.image.url }}" alt="{{ equipment.name }}" 
+               class="w-full rounded-2xl object-cover h-80 shadow-md transition-transform hover:scale-105">
+        {% else %}
+          <div class="w-full h-80 bg-gray-200 rounded-2xl flex items-center justify-center text-gray-500 text-base font-medium">
+            No Image Available
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Equipment Info -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Rental Price -->
+          <div class="bg-blue-50 p-4 rounded-xl">
+            <h3 class="text-sm font-semibold text-blue-800 uppercase">Rental Price</h3>
+            <p class="text-2xl font-bold text-blue-900 mt-1">฿{{ equipment.rental_price }}</p>
+          </div>
+
+          <!-- Availability -->
+          <div class="bg-green-50 p-4 rounded-xl">
+            <h3 class="text-sm font-semibold text-green-800 uppercase">Availability</h3>
+            <p class="text-xl font-medium mt-1">
+              {% if equipment.status == 'available' %}
+                <span class="text-green-600">Available</span>
+              {% else %}
+                <span class="text-red-600">Unavailable</span>
+              {% endif %}
+            </p>
+          </div>
+
+          <!-- Stock -->
+          <div class="bg-yellow-50 p-4 rounded-xl">
+            <h3 class="text-sm font-semibold text-yellow-800 uppercase">Stock</h3>
+            <p class="text-xl font-medium mt-1">
+              {% if equipment.stock <= 0 %}
+                <span class="text-red-600">{{ equipment.stock }}</span>
+              {% else %}
+                <span class="text-green-600">{{ equipment.stock }}</span>
+              {% endif %}
+            </p>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="bg-gray-50 p-6 rounded-xl">
+          <h3 class="text-sm font-semibold text-gray-800 uppercase">Description</h3>
+          <p class="text-gray-600 mt-2 leading-relaxed">{{ equipment.description }}</p>
+        </div>
+        <div class="mt-8">
+          <!-- ปุ่ม -->
+          <div class="mt-4 text-left">
+            <a 
+               class="inline-block bg-blue-600 text-white py-3 px-6 rounded-xl text-lg hover:bg-blue-700 transition"
+               href="#">Rent Now</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <div class="mt-10 text-center">
+    <a href="{% url 'equipment_list' %}" 
+       class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition shadow-md">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Back to Equipment List
+    </a>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,47 @@
+<!-- /myproject/myapp/templates/myapp/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Equipment Rental{% endblock %}</title>
+    <!-- Google Fonts: Noto Sans Thai -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Override Tailwind's font-sans with Noto Sans Thai */
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header with Navigation (Facebook-like dark blue) -->
+    <header class="bg-[#155c94] text-white p-4 shadow">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <a href="{% url 'home' %}" class="hover:text-gray-200 transition">CareEveryHome</a>
+            </h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="{% url 'home' %}" class="hover:text-gray-200 transition">Home</a></li>
+                    <li><a href="{% url 'equipment_list' %}" class="hover:text-gray-200 transition">Product</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-6">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer (Facebook-like light gray) -->
+    <footer class="bg-blue-600 text-gray-600 py-4 mt-6">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+          <p class="text-sm">&copy; 2025 Care Every Home. All rights reserved.</p>
+        </div>
+      </footer>      
+</body>
+</html>
