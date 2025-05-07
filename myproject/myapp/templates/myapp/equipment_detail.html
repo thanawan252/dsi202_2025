@@ -3,12 +3,22 @@
 
 {% block content %}
 <div class="max-w-5xl mx-auto px-6 py-12">
-  <!-- Add to Cart Button -->
-<div class="flex justify-end mb-4">
-  <a href="#"
-     class="inline-flex items-center bg-green-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-green-700 transition shadow-md">
-    🛒 Add to Cart
-  </a>
+  <!-- Add to Cart Form -->
+<form method="post" action="{% url 'add_to_cart' equipment_id=equipment.id %}">
+  {% csrf_token %}
+  <div class="flex items-center gap-4 mb-4 justify-end">
+    <label for="months" class="text-sm font-medium text-gray-700">จำนวนเดือน:</label>
+    <input type="number" name="months" id="months" min="1" value="1" 
+           class="w-20 border border-gray-300 rounded px-2 py-1 shadow-sm">
+
+    <button type="submit" 
+            class="inline-flex items-center bg-green-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-green-700 transition shadow-md">
+      🛒 Add to Cart
+    </button>
+  </div>
+</form>
+
+
 </div>
 
   <!-- Header -->
@@ -73,7 +83,7 @@
           <div class="mt-4 text-left">
             <a 
                class="inline-block bg-blue-600 text-white py-3 px-6 rounded-xl text-lg hover:bg-blue-700 transition"
-               href="#">Rent Now</a>
+               href="{% url 'rent' equipment.id %}">Rent Now</a>
           </div>
         </div>
         </div>

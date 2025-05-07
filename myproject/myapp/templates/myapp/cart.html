@@ -1,0 +1,33 @@
+<!-- /myproject/myapp/templates/myapp/cart.html -->
+{% extends "myapp/base.html" %}
+
+{% block title %}ตะกร้าสินค้า - Care Every Home{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-[#155c94] mb-4">ตะกร้าสินค้า (Cart)</h2>
+    <p class="mb-4">อุปกรณ์ที่คุณเลือกไว้สำหรับการเช่า:</p>
+
+    {% if cart_items %}
+    <ul class="space-y-4">
+        {% for item in cart_items %}
+        <li class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <div>
+                <p class="font-semibold">{{ item.name }}</p>
+                <p class="text-sm text-gray-600">จำนวนเดือน: {{ item.months }} | ราคา/เดือน: {{ item.price }} บาท</p>
+                <p class="text-sm font-bold">รวม: {{ item.total }} บาท</p>
+            </div>
+            <a href="" class="text-red-500 hover:text-red-700">ลบออก</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="mt-6 text-right">
+        <p class="font-bold text-lg">ยอดรวมทั้งหมด: {{ total_price }} บาท</p>
+        <a href="rent.html" class="mt-4 inline-block bg-[#155c94] text-white px-4 py-2 rounded-lg hover:bg-[#104a75]">ดำเนินการเช่าต่อ</a>
+    </div>
+    {% else %}
+    <p class="text-gray-500">ยังไม่มีอุปกรณ์ในตะกร้า ไปที่หน้า <a href="{% url 'equipment_list' %}" class="text-blue-500 hover:text-blue-700">Product</a> เพื่อเลือกเช่าเลย!</p>
+    {% endif %}
+</div>
+{% endblock %}
