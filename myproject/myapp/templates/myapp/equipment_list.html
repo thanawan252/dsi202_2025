@@ -26,8 +26,8 @@
                 {% endif %}
 
                 <!-- ปุ่ม Add Fav -->
-                <a href="" class="absolute bottom-4 right-4 bg-pink-500 text-white px-3 py-1 rounded-full text-sm hover:bg-pink-600 shadow-md">
-                    ♥ Add Fav
+                <a href="{% url 'fav' %}" class="absolute bottom-4 right-4 bg-pink-500 text-white px-3 py-1 rounded-full text-sm hover:bg-pink-600 shadow-md">
+                ♥ Add Fav
                 </a>
             </div>
         {% empty %}

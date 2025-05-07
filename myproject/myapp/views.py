@@ -7,6 +7,11 @@ from django.db.models import Q  # For complex queries
 def home(request):
     return render(request, 'myapp/home.html')
 
+# Favorites Page (FBV)
+def fav_view(request):
+    #favorite_items = request.user.favorites.all()  # ดึงรายการโปรดของผู้ใช้ปัจจุบัน
+    return render(request, 'myapp/fav.html') #, {'favorite_items': favorite_items})
+
 #  (CBV)
 class EquipmentListView(ListView):
     model = Equipment
