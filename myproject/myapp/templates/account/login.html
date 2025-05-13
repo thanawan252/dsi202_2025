@@ -1,0 +1,63 @@
+<!-- myapp/templates/account/login.html -->
+{% extends "myapp/base.html" %}
+
+{% block title %}Log In - Care Every Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-3xl font-bold text-[#155c94] text-center mb-6">Log In</h2>
+
+        {% if form.errors %}
+            <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
+                <p>Your username and password didn't match. Please try again.</p>
+            </div>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p class="text-red-700 mb-4">Your account doesn't have access to this page. Please log in with an account that has access.</p>
+            {% else %}
+                <p class="text-gray-700 mb-4">Please log in to see this page.</p>
+            {% endif %}
+        {% endif %}
+
+        <form method="post" action="{% url 'account_login' %}" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label for="id_login" class="block text-sm font-medium text-gray-700">Email or Username</label>
+                <input type="text" name="login" id="id_login" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#155c94] focus:border-[#155c94] transition duration-300" required>
+            </div>
+            <div>
+                <label for="id_password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" name="password" id="id_password" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#155c94] focus:border-[#155c94] transition duration-300" required>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" name="remember" id="id_remember" class="h-4 w-4 text-[#155c94] focus:ring-[#155c94] border-gray-300 rounded">
+                <label for="id_remember" class="ml-2 text-sm text-gray-700">Remember Me</label>
+            </div>
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+            {% endif %}
+            <button type="submit" class="w-full bg-[#4db8a4] hover:bg-[#155c94] text-white font-semibold py-2 px-4 rounded-lg transition duration-300">Log In</button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-700">Don't have an account? <a href="{% url 'account_signup' %}" class="text-[#155c94] hover:text-[#4db8a4] font-semibold">Sign Up</a></p>
+            <p class="text-sm text-gray-700 mt-2"><a href="{% url 'account_reset_password' %}" class="text-[#155c94] hover:text-[#4db8a4] font-semibold">Forgot Password?</a></p>
+        </div>
+
+        <!-- Social Login (Google) -->
+        {% load socialaccount %}
+        {% get_providers as socialaccount_providers %}
+        {% if socialaccount_providers %}
+            <div class="mt-6">
+                <p class="text-sm text-gray-700 text-center mb-4">Or log in with:</p>
+                <a href="{% provider_login_url 'google' %}" class="flex items-center justify-center bg-[#fefefe] border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 rounded-lg transition duration-300">
+                    <i class="fab fa-google mr-2"></i> Log in with Google
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

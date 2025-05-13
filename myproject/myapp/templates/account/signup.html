@@ -1,0 +1,68 @@
+<!-- myapp/templates/account/signup.html -->
+{% extends "myapp/base.html" %}
+
+{% block title %}Sign Up - Care Every Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-3xl font-bold text-[#155c94] text-center mb-6">Sign Up</h2>
+
+        {% if form.errors %}
+            <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
+                <p>Please correct the errors below:</p>
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'account_signup' %}" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label for="id_email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email" id="id_email" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#155c94] focus:border-[#155c94] transition duration-300" required>
+            </div>
+            <div>
+                <label for="id_username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" name="username" id="id_username" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#155c94] focus:border-[#155c94] transition duration-300" required>
+            </div>
+            <div>
+                <label for="id_password1" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" name="password1" id="id_password1" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#155c94] focus:border-[#155c94] transition duration-300" required>
+            </div>
+            <div>
+                <label for="id_password2" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                <input type="password" name="password2" id="id_password2" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#155c94] focus:border-[#155c94] transition duration-300" required>
+            </div>
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+            {% endif %}
+            <button type="submit" class="w-full bg-[#4db8a4] hover:bg-[#155c94] text-white font-semibold py-2 px-4 rounded-lg transition duration-300">Sign Up</button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-700">Already have an account? <a href="{% url 'account_login' %}" class="text-[#155c94] hover:text-[#4db8a4] font-semibold">Log In</a></p>
+        </div>
+
+        <!-- Social Login (Google) -->
+        {% load socialaccount %}
+        {% get_providers as socialaccount_providers %}
+        {% if socialaccount_providers %}
+            <div class="mt-6">
+                <p class="text-sm text-gray-700 text-center mb-4">Or sign up with:</p>
+                <a href="{% provider_login_url 'google' %}" class="flex items-center justify-center bg-[#fefefe] border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 rounded-lg transition duration-300">
+                    <i class="fab fa-google mr-2"></i> Sign up with Google
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

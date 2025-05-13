@@ -1,0 +1,21 @@
+<!-- myapp/templates/account/logout.html -->
+{% extends "myapp/base.html" %}
+
+{% block title %}Log Out - Care Every Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-3xl font-bold text-[#155c94] text-center mb-6">Log Out</h2>
+        <p class="text-gray-700 text-center mb-6">Are you sure you want to log out?</p>
+        <form method="post" action="{% url 'account_logout' %}" class="flex justify-center space-x-4">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+            {% endif %}
+            <button type="submit" class="bg-[#4db8a4] hover:bg-[#155c94] text-white font-semibold py-2 px-6 rounded-lg transition duration-300">Log Out</button>
+            <a href="{% url 'home' %}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-6 rounded-lg transition duration-300">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
