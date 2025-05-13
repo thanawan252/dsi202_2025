@@ -1,0 +1,29 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Rent {{ product.name }} - Care Every Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-[#155c94] mb-6">Rent {{ product.name }}</h1>
+  <div class="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+    <form method="post" action="{% url 'rent_product' product.pk %}">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label for="start_date" class="block text-gray-700 font-semibold mb-2">Start Date</label>
+        {{ form.start_date }}
+      </div>
+      <div class="mb-4">
+        <label for="rental_months" class="block text-gray-700 font-semibold mb-2">How many months do you want to rent? (Max 12)</label>
+        <select name="rental_months" id="rental_months" class="w-full p-3 border border-[#009aa6] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4db8a4]" required>
+          {% for month in "1 2 3 4 5 6 7 8 9 10 11 12" %}
+            <option value="{{ month }}">{{ month }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="w-full bg-[#155c94] text-white py-3 px-6 rounded-lg hover:bg-[#009aa6] transition-all duration-300">
+        Confirm Rental
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,33 +1,79 @@
-<!-- /myproject/myapp/templates/myapp/cart.html -->
-{% extends "myapp/base.html" %}
+<!-- myapp/templates/myapp/cart.html -->
+{% extends 'myapp/base.html' %}
 
-{% block title %}ตะกร้าสินค้า - Care Every Home{% endblock %}
+{% block title %}Your Cart - Care Every Home{% endblock %}
 
 {% block content %}
-<div class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-[#155c94] mb-4">ตะกร้าสินค้า (Cart)</h2>
-    <p class="mb-4">อุปกรณ์ที่คุณเลือกไว้สำหรับการเช่า:</p>
-
-    {% if cart_items %}
-    <ul class="space-y-4">
-        {% for item in cart_items %}
-        <li class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-            <div>
-                <p class="font-semibold">{{ item.name }}</p>
-                <p class="text-sm text-gray-600">จำนวนเดือน: {{ item.months }} | ราคา/เดือน: {{ item.price }} บาท</p>
-                <p class="text-sm font-bold">รวม: {{ item.total }} บาท</p>
-            </div>
-            <a href="" class="text-red-500 hover:text-red-700">ลบออก</a>
-        </li>
-        {% endfor %}
-    </ul>
-
-    <div class="mt-6 text-right">
-        <p class="font-bold text-lg">ยอดรวมทั้งหมด: {{ total_price }} บาท</p>
-        <a href="rent.html" class="mt-4 inline-block bg-[#155c94] text-white px-4 py-2 rounded-lg hover:bg-[#104a75]">ดำเนินการเช่าต่อ</a>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Cart Header -->
+    <div class="relative text-center my-10">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-[#000000] rounded-lg py-4 px-8 inline-block shadow-lg transform transition-all duration-300 hover:shadow-2xl hover:scale-105 animate-fade-in">
+        Your Cart
+        <span class="block w-24 h-1 bg-[#009aa6] mx-auto mt-3 rounded-full"></span>
+      </h1>
     </div>
-    {% else %}
-    <p class="text-gray-500">ยังไม่มีอุปกรณ์ในตะกร้า ไปที่หน้า <a href="{% url 'equipment_list' %}" class="text-blue-500 hover:text-blue-700">Product</a> เพื่อเลือกเช่าเลย!</p>
-    {% endif %}
-</div>
+
+    <!-- Cart Items -->
+    <section class="mt-10">
+      {% if cart_items %}
+        <div class="grid grid-cols-1 gap-6">
+          {% for item in cart_items %}
+            <div class="flex flex-col sm:flex-row items-center bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              {% if item.product.image %}
+                <img 
+                  src="{{ item.product.image.url }}" 
+                  alt="{{ item.product.name }}" 
+                  class="w-full sm:w-32 h-32 object-cover rounded-lg mb-4 sm:mb-0 sm:mr-6"
+                />
+              {% else %}
+                <div class="w-full sm:w-32 h-32 bg-gray-100 rounded-lg mb-4 sm:mb-0 sm:mr-6 flex items-center justify-center">
+                  <span class="text-gray-500">No Image</span>
+                </div>
+              {% endif %}
+              <div class="flex-grow">
+                <h3 class="text-lg font-extrabold text-[#155c94]">{{ item.product.name }}</h3>
+                <p class="text-[#000000] font-medium">฿{{ item.product.monthly_rate }}/month</p>
+                <p class="text-[#009aa6] text-sm">Stock: {{ item.product.stock }}</p>
+              </div>
+              <div class="flex space-x-4 mt-4 sm:mt-0">
+                <!-- Rent Now Button -->
+                <a 
+                  href="{% url 'rent_product' item.product.pk %}" 
+                  class="bg-[#29AB87] text-white py-2 px-4 rounded-lg hover:bg-[#23CB371] transition-all duration-300"
+                >
+                  Rent Now
+                </a>
+                <!-- Remove from Cart Button -->
+                <form action="{% url 'toggle_cart' item.product.pk %}" method="post">
+                  {% csrf_token %}
+                  <button 
+                    type="submit" 
+                    class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all duration-300"
+                  >
+                    Remove
+                  </button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center text-gray-600 py-10">
+          <p class="text-lg">Your cart is empty.</p>
+          <p class="text-sm">Browse our <a href="{% url 'product_list' %}" class="text-[#009aa6] hover:underline">products</a> to add items.</p>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+
+<style>
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+</style>
 {% endblock %}

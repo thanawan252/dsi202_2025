@@ -1,48 +1,130 @@
-<!-- /myproject/myapp/templates/myapp/base.html -->
+<!-- myapp/templates/myapp/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Equipment Rental{% endblock %}</title>
-    <!-- Google Fonts: Noto Sans Thai -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+    <title>{% block title %}Care Every Home{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    
+    <!-- Google Fonts: Noto Sans and Noto Sans Thai -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Thai&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* Override Tailwind's font-sans with Noto Sans Thai */
         body {
-            font-family: 'Noto Sans Thai', sans-serif;
+            font-family: 'Noto Sans', 'Noto Sans Thai', sans-serif;
         }
     </style>
 </head>
 <body class="bg-gray-100">
-    <!-- Header with Navigation (Facebook-like dark blue) -->
-    <header class="bg-[#155c94] text-white p-4 shadow">
+    <!-- Header with Navigation -->
+    <header class="bg-[#fefefe] text-white p-4 shadow sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">
-                <a href="{% url 'home' %}" class="hover:text-gray-200 transition">CareEveryHome</a>
-            </h1>
-            <nav>
-                <ul class="flex space-x-6">
-                    <li><a href="{% url 'home' %}" class="hover:text-gray-200 transition">Home</a></li>
-                    <li><a href="{% url 'equipment_list' %}" class="hover:text-gray-200 transition">Product</a></li>
-                    <li><a href="{% url 'fav' %}" class="hover:text-gray-200 transition">Fav</a></li>
+            <!-- Logo -->
+            <a href="{% url 'home' %}" class="flex items-center space-x-3">
+                <img src="/media/products/Logo.png" alt="Care Every Home Logo" class="h-20">
+                <span class="text-2xl font-bold text-[#155c94]">Care Every Home</span>
+            </a>
+            
+            <!-- Hamburger Icon (visible on mobile) -->
+            <button id="hamburger-btn" class="md:hidden text-black focus:outline-none" aria-expanded="false" aria-controls="nav-menu">
+                <i id="hamburger-icon" class="fas fa-bars text-2xl"></i>
+            </button>
+
+            <!-- Navigation Menu -->
+            <nav id="nav-menu" class="hidden md:flex md:items-center absolute md:static top-24 left-0 w-full bg-[#fefefe] shadow-md md:shadow-none p-4 md:p-0 transform -translate-y-full md:transform-none transition-transform duration-500 ease-in-out" aria-labelledby="hamburger-btn">
+                <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 md:justify-end items-center md:items-start w-full">
+                    <li>
+                        <a href="{% url 'home' %}" class="text-black hover:text-[#155c94] transition duration-300">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'product_list' %}" class="text-black hover:text-[#155c94] transition duration-300">
+                            Products
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'favorite_list' %}" class="text-[#bb1615] hover:text-[#ff8da1] transition duration-300 flex items-center text-3xl">
+                                <i class="fas fa-heart mr-2 text-4xl"></i>
+                            </a>                          
+                        </li>
+                        <li>
+                            <a href="{% url 'cart_list' %}" class="text-[#009aa6] hover:text-[#4db8a4] transition duration-300 flex items-center text-3xl">
+                                <i class="fas fa-shopping-cart mr-2 text-4xl"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'user_profile' %}" class="bg-[#4db8a4] hover:bg-[#155c94] text-white px-4 py-2 rounded-xl transition duration-300">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'dashboard' %}" class="bg-[#4db8a4] hover:bg-[#155c94] text-white px-4 py-2 rounded-xl transition duration-300">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'account_logout' %}" class="bg-[#4db8a4] hover:bg-[#155c94] text-white px-4 py-2 rounded-xl transition duration-300">
+                            Log out
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'account_login' %}" class="bg-[#4db8a4] hover:bg-[#155c94] text-white px-4 py-2 rounded-xl transition duration-300">
+                                Log in
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
-            </nav>
+            </nav>          
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto p-6">
+    <main>
         {% block content %}
         {% endblock %}
     </main>
 
-    <!-- Footer (Facebook-like light gray) -->
-    <footer class="bg-blue-600 text-black-600 py-4 mt-6">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-          <p class="text-sm">&copy; 2025 Care Every Home. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-[#1f2937] text-white p-4">
+        <div class="container mx-auto text-center">
+            <p>© 2025 Care Every Home. All rights reserved.</p>
         </div>
-      </footer>      
+    </footer>
+
+    <!-- JavaScript for Hamburger Menu Toggle -->
+    <script>
+        document.getElementById('hamburger-btn').addEventListener('click', function () {
+            const navMenu = document.getElementById('nav-menu');
+            const icon = document.getElementById('hamburger-icon');
+            navMenu.classList.toggle('hidden');
+            navMenu.classList.toggle('translate-y-0');
+            navMenu.classList.toggle('-translate-y-full');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+            this.setAttribute('aria-expanded', !navMenu.classList.contains('hidden'));
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('nav-menu');
+                const icon = document.getElementById('hamburger-icon');
+                navMenu.classList.add('hidden');
+                navMenu.classList.remove('translate-y-0');
+                navMenu.classList.add('-translate-y-full');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+                document.getElementById('hamburger-btn').setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
 </body>
 </html>

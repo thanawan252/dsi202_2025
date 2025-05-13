@@ -1,14 +1,27 @@
+# myapp/urls.py
 from django.urls import path
-from .views import home, EquipmentListView, EquipmentDetailView, fav_view, RentView, cart_view, add_to_cart, remove_from_cart
+from .views import (
+    home, ProductListView, ProductDetailView, RentProductView, 
+    ProductListCreateAPIView, ProductRetrieveUpdateAPIView, 
+    dashboard, toggle_favorite, FavoriteListView, toggle_cart, 
+    CartListView, user_profile, mark_payment, post_review, toggle_review_like, submit_review
+)
 
 urlpatterns = [
-    path('', home, name='home'),  # Home page at root URL
-    path('equipments/', EquipmentListView.as_view(), name='equipment_list'),
-    path('equipments/<int:pk>/', EquipmentDetailView.as_view(), name='equipment_detail'),
-    path('fav/', fav_view, name='fav'),  # เพิ่ม URL สำหรับหน้า Favorites
-    path('rents/create/<int:equipment_id>/', RentView.as_view(), name='rent'),
-    path('equipments/<int:equipment_id>/rent.html', RentView.as_view(), name='rent_alt'),
-    path('cart/', cart_view, name='cart'),  # หน้า Cart
-    path('cart/add/<int:equipment_id>/', add_to_cart, name='add_to_cart'),  # สำหรับการเพิ่มอุปกรณ์ลงในตะกร้า
-    path('cart/remove/<int:equipment_id>/', remove_from_cart, name='remove_from_cart'),  # สำหรับการลบอุปกรณ์จากตะกร้า
+    path('', home, name='home'),
+    path('products/', ProductListView.as_view(), name='product_list'),
+    path('products/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
+    path('products/<int:pk>/rent/', RentProductView.as_view(), name='rent_product'),
+    path('dashboard/', dashboard, name='dashboard'),
+    path('api/products/', ProductListCreateAPIView.as_view(), name='product_api_list_create'),
+    path('api/products/<int:pk>/', ProductRetrieveUpdateAPIView.as_view(), name='product_api_retrieve_update'),
+    path('favorite/toggle/<int:product_id>/', toggle_favorite, name='toggle_favorite'),
+    path('favorites/', FavoriteListView.as_view(), name='favorite_list'),
+    path('cart/toggle/<int:product_id>/', toggle_cart, name='toggle_cart'),
+    path('cart/', CartListView.as_view(), name='cart_list'),
+    path('profile/', user_profile, name='user_profile'),
+    path('rental/<int:rental_id>/pay/', mark_payment, name='mark_payment'),
+    path('products/<int:product_id>/review/', post_review, name='post_review'),
+    path('review/<int:review_id>/like/', toggle_review_like, name='toggle_review_like'),
+    path('rental/<int:rental_id>/review/', submit_review, name='submit_review'),
 ]
