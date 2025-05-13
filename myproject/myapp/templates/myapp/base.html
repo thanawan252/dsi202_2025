@@ -1,4 +1,3 @@
-<!-- myapp/templates/myapp/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,73 +9,86 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     
-    <!-- Google Fonts: Noto Sans and Noto Sans Thai -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Thai&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
-            font-family: 'Noto Sans', 'Noto Sans Thai', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background-color: #E6F0FA; /* Pale Blue background */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .custom-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .btn-hover {
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(77, 168, 218, 0.3); /* Shadow with Soft Sky Blue */
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="antialiased">
     <!-- Header with Navigation -->
-    <header class="bg-[#fefefe] text-white p-4 shadow sticky top-0 z-50">
+    <header class="bg-white py-4 px-6 shadow-lg sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
             <!-- Logo -->
-            <a href="{% url 'home' %}" class="flex items-center space-x-3">
-                <img src="/media/products/Logo.png" alt="Care Every Home Logo" class="h-20">
-                <span class="text-2xl font-bold text-[#155c94]">Care Every Home</span>
+            <a href="{% url 'home' %}" class="flex items-center space-x-2">
+                <img src="/media/products/Logo.png" alt="Care Every Home Logo" class="h-12">
+                <span class="text-xl font-semibold text-[#2B6CB0]">Care Every Home</span>
             </a>
             
-            <!-- Hamburger Icon (visible on mobile) -->
-            <button id="hamburger-btn" class="md:hidden text-black focus:outline-none" aria-expanded="false" aria-controls="nav-menu">
+            <!-- Hamburger Icon -->
+            <button id="hamburger-btn" class="md:hidden text-[#2B6CB0] focus:outline-none" aria-expanded="false" aria-controls="nav-menu">
                 <i id="hamburger-icon" class="fas fa-bars text-2xl"></i>
             </button>
 
             <!-- Navigation Menu -->
-            <nav id="nav-menu" class="hidden md:flex md:items-center absolute md:static top-24 left-0 w-full bg-[#fefefe] shadow-md md:shadow-none p-4 md:p-0 transform -translate-y-full md:transform-none transition-transform duration-500 ease-in-out" aria-labelledby="hamburger-btn">
-                <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 md:justify-end items-center md:items-start w-full">
+            <nav id="nav-menu" class="hidden md:flex md:items-center absolute md:static top-16 left-0 w-full bg-white shadow-md md:shadow-none p-4 md:p-0 transform -translate-y-full md:transform-none transition-transform duration-500 ease-in-out" aria-labelledby="hamburger-btn">
+                <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 md:justify-end items-center md:items-start w-full">
                     <li>
-                        <a href="{% url 'home' %}" class="text-black hover:text-[#155c94] transition duration-300">
+                        <a href="{% url 'home' %}" class="text-[#4A5568] hover:text-[#4DA8DA] font-medium transition duration-300">
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'product_list' %}" class="text-black hover:text-[#155c94] transition duration-300">
+                        <a href="{% url 'product_list' %}" class="text-[#4A5568] hover:text-[#4DA8DA] font-medium transition duration-300">
                             Products
                         </a>
                     </li>
                     {% if user.is_authenticated %}
                         <li>
-                            <a href="{% url 'favorite_list' %}" class="text-[#bb1615] hover:text-[#ff8da1] transition duration-300 flex items-center text-3xl">
-                                <i class="fas fa-heart mr-2 text-4xl"></i>
+                            <a href="{% url 'favorite_list' %}" class="text-[#bb1615] hover:text-[#ff8da1] transition duration-300 flex items-center text-xl">
+                                <i class="fas fa-heart text-xl"></i>
                             </a>                          
                         </li>
                         <li>
-                            <a href="{% url 'cart_list' %}" class="text-[#009aa6] hover:text-[#4db8a4] transition duration-300 flex items-center text-3xl">
-                                <i class="fas fa-shopping-cart mr-2 text-4xl"></i>
+                            <a href="{% url 'cart_list' %}" class="text-[#34C759] hover:text-[#4DA8DA] transition duration-300 flex items-center text-xl">
+                                <i class="fas fa-shopping-cart text-xl"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'user_profile' %}" class="bg-[#4db8a4] hover:bg-[#155c94] text-white px-4 py-2 rounded-xl transition duration-300">
+                            <a href="{% url 'user_profile' %}" class="bg-[#4DA8DA] hover:bg-[#2B6CB0] text-white px-5 py-2 rounded-full font-medium transition duration-300 btn-hover">
                                 Profile
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'dashboard' %}" class="bg-[#4db8a4] hover:bg-[#155c94] text-white px-4 py-2 rounded-xl transition duration-300">
+                            <a href="{% url 'dashboard' %}" class="bg-[#4DA8DA] hover:bg-[#2B6CB0] text-white px-5 py-2 rounded-full font-medium transition duration-300 btn-hover">
                                 Dashboard
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'account_logout' %}" class="bg-[#4db8a4] hover:bg-[#155c94] text-white px-4 py-2 rounded-xl transition duration-300">
-                            Log out
+                            <a href="{% url 'account_logout' %}" class="bg-[#4DA8DA] hover:bg-[#2B6CB0] text-white px-5 py-2 rounded-full font-medium transition duration-300 btn-hover">
+                                Log out
                             </a>
                         </li>
                     {% else %}
                         <li>
-                            <a href="{% url 'account_login' %}" class="bg-[#4db8a4] hover:bg-[#155c94] text-white px-4 py-2 rounded-xl transition duration-300">
+                            <a href="{% url 'account_login' %}" class="bg-[#4DA8DA] hover:bg-[#2B6CB0] text-white px-5 py-2 rounded-full font-medium transition duration-300 btn-hover">
                                 Log in
                             </a>
                         </li>
@@ -93,13 +105,13 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#1f2937] text-white p-4">
+    <footer class="bg-[#2B6CB0] text-white py-8">
         <div class="container mx-auto text-center">
-            <p>© 2025 Care Every Home. All rights reserved.</p>
+            <p class="text-sm opacity-80">© 2025 Care Every Home. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript for Hamburger Menu Toggle -->
+    <!-- JavaScript for Hamburger Menu -->
     <script>
         document.getElementById('hamburger-btn').addEventListener('click', function () {
             const navMenu = document.getElementById('nav-menu');
@@ -112,7 +124,6 @@
             this.setAttribute('aria-expanded', !navMenu.classList.contains('hidden'));
         });
 
-        // Close menu when a link is clicked
         document.querySelectorAll('#nav-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 const navMenu = document.getElementById('nav-menu');
