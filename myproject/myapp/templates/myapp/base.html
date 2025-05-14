@@ -12,10 +12,11 @@
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #E6F0FA; /* Pale Blue background */
+            background-color: #E6F0FA;
         }
         html {
             scroll-behavior: smooth;
@@ -28,12 +29,12 @@
         }
         .btn-hover:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.3); /* Shadow with Deep Navy Blue */
+            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.3);
         }
     </style>
 </head>
 <body class="antialiased">
-    <!-- Header with Navigation -->
+    <!-- Header -->
     <header class="bg-white py-4 px-6 shadow-lg sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
             <!-- Logo -->
@@ -41,7 +42,7 @@
                 <img src="/media/products/Logo.png" alt="Care Every Home Logo" class="h-12">
                 <span class="text-xl font-semibold text-[#2B6CB0]">Care Every Home</span>
             </a>
-            
+
             <!-- Hamburger Icon -->
             <button id="hamburger-btn" class="md:hidden text-[#2B6CB0] focus:outline-none" aria-expanded="false" aria-controls="nav-menu">
                 <i id="hamburger-icon" class="fas fa-bars text-2xl"></i>
@@ -62,27 +63,27 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li>
-                            <a href="{% url 'favorite_list' %}" class="text-[#bb1615] hover:text-[#ff8da1] transition duration-300 flex items-center text-xl">
-                                <i class="fas fa-heart text-xl"></i>
+                            <a href="{% url 'favorite_list' %}" class="text-[#bb1615] hover:text-[#ff8da1] transition duration-300 flex items-center text-xl" title="Favorites">
+                                <i class="fas fa-heart text-2xl"></i>
                             </a>                          
                         </li>
                         <li>
-                            <a href="{% url 'cart_list' %}" class="text-[#34C759] hover:text-[#4DA8DA] transition duration-300 flex items-center text-xl">
-                                <i class="fas fa-shopping-cart text-xl"></i>
+                            <a href="{% url 'cart_list' %}" class="text-[#34C759] hover:text-[#4DA8DA] transition duration-300 flex items-center text-xl" title="Cart">
+                                <i class="fas fa-shopping-cart text-2xl"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'user_profile' %}" class="bg-[#1E3A8A] hover:bg-[#1A365D] text-white px-5 py-2 rounded-full font-medium transition duration-300 btn-hover">
-                                Profile
+                            <a href="{% url 'user_profile' %}" class="text-[#1E3A8A] hover:text-[#1A365D] transition duration-300 flex items-center text-xl" title="Profile">
+                                <i class="fas fa-user-circle text-2xl"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'dashboard' %}" class="bg-[#1E3A8A] hover:bg-[#1A365D] text-white px-5 py-2 rounded-full font-medium transition duration-300 btn-hover">
+                            <a href="{% url 'dashboard' %}" class="bg-[#1E3A8A] hover:bg-[#1A365D] text-white px-4 py-2 rounded-full font-medium transition duration-300 btn-hover">
                                 Dashboard
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'account_logout' %}" class="bg-[#1E3A8A] hover:bg-[#1A365D] text-white px-5 py-2 rounded-full font-medium transition duration-300 btn-hover">
+                            <a href="{% url 'account_logout' %}" class="bg-[#E53E3E] hover:bg-[#C53030] text-white px-4 py-2 rounded-full font-medium transition duration-300 btn-hover">
                                 Log out
                             </a>
                         </li>
@@ -94,7 +95,7 @@
                         </li>
                     {% endif %}
                 </ul>
-            </nav>          
+            </nav>
         </div>
     </header>
 
@@ -111,7 +112,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Hamburger Menu -->
+    <!-- Hamburger JS -->
     <script>
         document.getElementById('hamburger-btn').addEventListener('click', function () {
             const navMenu = document.getElementById('nav-menu');
@@ -139,3 +140,4 @@
     </script>
 </body>
 </html>
+

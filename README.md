@@ -71,3 +71,22 @@ Care Every Home is a university student-led project developed to meet the growin
 ### 5. Delivery Fee Calculation
 - Shipping fees are automatically calculated based on your address.
 - The total cost including shipping is shown at **Checkout**.
+
+# Setup
+## Docker Desktop Terminal
+```bash
+git clone https://github.com/DuangjaiWork/dsi202_2025.git
+cd dsi202_2025
+code .
+```
+## Docker command in VS Code
+```bash
+docker-compose up --build
+```
+## Accessing the Web App
+http://localhost:8000/ (Home page)
+
+http://localhost:8000/admin/ (Admin page)
+
+# Presentation Video:
+https://youtu.be/NF6TBStonPo
